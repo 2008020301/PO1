@@ -11,7 +11,7 @@ while True: #Vraagt de gebruiker om een sport
         if sport > 46:
             raise ValueError    
         break
-    except:
+    except ValueError:
         pass
 
 y = []; g = []; s = []; b = [] #Maakt lijsten met tijden en jaren aan
