@@ -1,35 +1,31 @@
 import json
 import matplotlib.pyplot as plt
-from pandas import DataFrame as DF
+import pandas as pd
 
 with open("PO1/results.json") as data:
     data = json.load(data) #Laadt de dataset
 
-names = [(data[i]["name"]) for i in range(len(data))] #Maakt lijst met sporten aan
-
-table = DF(names, columns=["Sports"])
-#print(table) #Maakt lijst met namen overzichtelijk bij printen
-
-'''while True:
+while True: #Vraagt de gebruiker om een sport
     try:
-        index = int(input("0-46: "))
-        if index > 46:
+        sport = int(input("0-46: "))
+        if sport > 46:
             raise ValueError    
         break
     except:
-        pass'''
+        pass
 
-#years = [(data[index]["games"][i]["year"]) for i in range(len(data[index]["games"]))]
-#print(years) #x-as
+y = []; g = []; s = []; b = [] #Maakt lijsten met tijden en jaren aan
+for i in (data[sport]["games"]):
+    u, v, w, x = i["year"], i["results"][0]["result"], i["results"][1]["result"], i["results"][2]["result"]
+    y.append(u); g.append(v); s.append(w); b.append(x)
 
-#first_place = (data[0]["games"][0]["results"][0]["result"]) #laadt eerste plek
-#years = (data[0]["games"][0]["year"])
+timetable = pd.DataFrame()
+timetable = timetable.assign( #Maakt het tabel met pandas aan
+    year = y,
+    gold = g,
+    silver = s,
+    bronze = b
+)
 
-#x, y = years, first_place
-#print(x, y)
-
-for i in (data[0]["games"]):
-    print(i)
-    break
-
-#print(len(data[0]["games"][0]["results"]))
+print(data[sport]["name"])
+print(timetable)
