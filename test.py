@@ -2,64 +2,76 @@ import json
 import matplotlib.pyplot as plt
 import pandas as pd
 import re
+from bubblesort import bubble_sort
 
 with open("PO1/results.json") as data:
     data = json.load(data) #Laadt de dataset
 
-for n in range(len(data)):
-    print(f"{n}. {data[n]['name']}")
+def sport_names(data):
+    names = []
+    for n in range(len(data)):
+        if n in [14, 39]:
+            continue
+        names.append(data[n]["name"])
 
-while True: #Vraagt de gebruiker om een sport
-    try:
-        sport = int(input("0-46: "))
-        if sport > 46:
-            raise ValueError    
-        break
-    except:
-        pass
+    for n in range(len(names)):
+        print(f"{n}. {names[n]}")
 
-y = []; g = []; s = []; b = [] #Maakt lijsten met tijden en jaren aan
-for i in (data[sport]["games"]):
-    try:
-        u = i["year"]
-        gsb = ["none", "none", "none"]
-        for n in range(len(i["results"])):
-            gsb[n] = i["results"][n]["result"]
-        v, w, x = gsb[0], gsb[1], gsb[2]
-    except IndexError:
-        print(i)
+def user_input(data):
+    while True: #Vraagt de gebruiker om een sport
+        try:
+            sport = int(input("0-44: "))
+            if sport > 44:
+                raise ValueError  
+            if sport == 14 or sport == 39:
+                sport += 1
+            break
+        except:
+            pass
+    y = []
+    for i in (data[sport]["games"]):
+        try:
+            u = i["year"]
+            gsb = ["none", "none", "none"]
+            for n in range(len(i["results"])):
+                if n < 3:
+                    gsb[n] = i["results"][n]["result"]
+            v, w, x = gsb[0], gsb[1], gsb[2]
+        except IndexError:
+            print(i)
 
-    y.append(u)
+        y.append([u, [v, w, x]])
+    return y
+    
+def result_correction(n:str):
+    if ",+" in n:
+        n = n.split(",+")[0]
+    if "." not in n:
+        n = n + ".0"
     stringsplit = re.compile(r"\d+").findall
+    return stringsplit(n)
     
-    def result_correction(n:str):
-        if ",+" in n:
-            n = n.split(",+")[0]
-        return stringsplit(n)
-    
-    v = result_correction(str(v))
-    w = result_correction(str(w))
-    x = result_correction(str(x))
+def string_to_seconds(str):
+    conversion = [3600, 60, 1, 0.01]
+    seconds = 0
+    for i, _ in enumerate(str):
+        seconds += int(str[-(i+1)]) * conversion[-(i+1)]
+    return seconds
 
-    def string_to_seconds(str):
-        conversion = [3600, 60, 1, 0.01]
-        seconds = 0
-        for i, _ in enumerate(str):
-            seconds += int(str[-(i+1)]) * conversion[-(i+1)]
-        return seconds
+sport_names(data)
+year = user_input(data)    
 
-    g.append(string_to_seconds(v))
-    s.append(string_to_seconds(w))
-    b.append(string_to_seconds(x))
+for y in year:
+    v = result_correction(str(y[1][0]))
+    w = result_correction(str(y[1][1]))
+    x = result_correction(str(y[1][2]))
 
+    y[1][0] = string_to_seconds(v)
+    y[1][1] = string_to_seconds(w)
+    y[1][2] = string_to_seconds(x)
 
-timetable = pd.DataFrame()
-timetable = timetable.assign( #Maakt het tabel met pandas aan
-    year = y,
-    gold = g,
-    silver = s,
-    bronze = b
-)
+for y in year:
+    print(y)
 
-print(data[sport]["name"])
-print(timetable)
+print(bubble_sort(year))
+
