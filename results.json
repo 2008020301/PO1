@@ -8773,6 +8773,12 @@
                         "result": "7724.495 P."
                     }, 
                     {
+                        "medal": "G", 
+                        "name": "Jim THORPE", 
+                        "nationality": "USA", 
+                        "result": 8412.955
+                    }, 
+                    {
                         "medal": "S", 
                         "name": "Charles LOMBERG", 
                         "nationality": "SWE", 
