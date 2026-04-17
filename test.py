@@ -2,7 +2,7 @@ import json
 import matplotlib.pyplot as plt
 import pandas as pd
 import re
-from bubblesort import bubble_sort
+from quicksort import quick_sort
 
 with open("PO1/results.json") as data:
     data = json.load(data) #Laadt de dataset
@@ -41,7 +41,7 @@ def user_input(data):
             print(i)
 
         y.append([u, [v, w, x]])
-    return y
+    return y, sport
     
 def result_correction(n:str):
     if ",+" in n:
@@ -59,7 +59,7 @@ def string_to_seconds(str):
     return seconds
 
 sport_names(data)
-year = user_input(data)    
+year, sport = user_input(data)    
 
 for y in year:
     v = result_correction(str(y[1][0]))
@@ -70,8 +70,24 @@ for y in year:
     y[1][1] = string_to_seconds(w)
     y[1][2] = string_to_seconds(x)
 
-for y in year:
-    print(y)
+sorted_data = quick_sort(year)
 
-print(bubble_sort(year))
+years = [data[0] for data in sorted_data]
+gold = []
+for n in range(len(sorted_data)):
 
+
+timetable = pd.DataFrame()
+timetable = timetable.assign( #Maakt het tabel met pandas aan
+    year = years,
+    gold = gold,
+    #silver = silver,
+    #bronze = bronze
+)
+
+timetable.plot(x="year", y=["gold", "silver", "bronze"], kind="line", marker="o")
+plt.title(data[sport]["name"])
+plt.ylabel("Number of medals")
+plt.show()
+
+print(timetable)
