@@ -51,22 +51,8 @@ def result_correction(n:str):
         n = n.split(",+")[0]
     if ",-" in n:
         n = n.split(",-")[0]
-    if "." not in n:
-        n = n + ".0"
     stringsplit = re.compile(r"\d+").findall
     return stringsplit(n)
-    
-def string_to_seconds(string):
-    conversion = [3600, 60, 1, 0.01]
-    seconds = 0
-    for i, _ in enumerate(string):
-        print(string)
-        if i == 2:
-            print(int(str(round(float(f"0.{string[-(i+1)]}"), 2)).split("0.")[1]) * conversion[-(i+1)])
-            seconds += int(str(round(float(f"0.{string[-(i+1)]}"), 2)).split("0.")[1]) * conversion[-(i+1)]
-        else:
-            seconds += int(string[-(i+1)]) * conversion[-(i+1)]
-    return seconds
 
 for i in range(44):
     sport_names(data)
@@ -74,14 +60,12 @@ for i in range(44):
 
     print(sport)
     if sport in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 19, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41]:
-        for y in year:
-            v = result_correction(str(y[1][0]))
-            w = result_correction(str(y[1][1]))
-            x = result_correction(str(y[1][2]))
-
-            y[1][0] = string_to_seconds(v)
-            y[1][1] = string_to_seconds(w)
-            y[1][2] = string_to_seconds(x)
+        year = quick_sort(year)
+        gold = [[y[0], result_correction(y[1][0])] for y in year]
+        silver = [[y[0], result_correction(y[1][1])] for y in year]
+        bronze = [[y[0], result_correction(y[1][1])] for y in year]
+        print(gold, silver, bronze)
+        
     elif sport in [14, 15, 16, 17, 18, 20, 21, 22, 36, 37, 38, 39, 40, 42, 43, 44]:
         for y in year:
             y[1][0] = float(y[1][0])
