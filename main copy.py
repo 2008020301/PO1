@@ -5,7 +5,7 @@ import re  # Voor regex (tekstverwerking)
 from quicksort import quick_sort  # Eigen sorteeralgoritme
 from itertools import chain  # Om meerdere lijsten als één te behandelen
 
-with open("results.json") as data: # Klik met de rechtermuisknop op 'result.json' -> kies: copy relative path. Plak die tussen de haakjes.
+with open("PO1/results.json") as data: # Klik met de rechtermuisknop op 'result.json' -> kies: copy relative path. Plak die tussen de haakjes.
     data = json.load(data)  # Laadt de dataset uit JSON bestand
 
 def sport_names(data):
@@ -92,6 +92,10 @@ def zero_conversion(data):
     return data  # Return aangepaste data
     # data OUTPUT:
     # ...[1904, 11.2], [1908, 11.2], [1912, 10.9],...
+
+def add_weights(data):
+    print(data)
+    pass
 
 sport_names(data)  # Toon sportnamen
 year, sport = user_input(data)  # Vraag gebruiker input
