@@ -1,0 +1,73 @@
+Uitleg van het programma (Olympische data analyse)
+Overzicht:
+Dit programma verwerkt sportdata uit een JSON-bestand en zet ruwe wedstrijdresultaten om naar bruikbare numerieke waarden. Daarna wordt de data opgeschoond, genormaliseerd en gevisualiseerd in een grafiek met behulp van Matplotlib.
+Het doel is om prestaties van verschillende jaren met elkaar te vergelijken.
+
+1. Data inladen
+Het programma leest een JSON-bestand in met sportgegevens.
+Deze data bevat:
+
+sporten
+wedstrijden per sport
+resultaten per wedstrijd (goud, zilver, brons)
+
+2. Sportselectie (sport_names, user_input)
+De gebruiker krijgt een lijst met sporten te zien en kiest er één.
+Sommige indexen (14 en 39) worden overgeslagen omdat die andere regels voor puntentelling volgen in de dataset.
+De input wordt gecontroleerd zodat alleen geldige sporten gekozen kunnen worden.
+
+3. Data-structuur opbouwen
+Voor de gekozen sport wordt per jaar een lijst opgebouwd:
+[jaar, [goud, zilver, brons]]
+Alleen de top 3 resultaten per jaar zijn opgeslagen.
+
+4. Data cleaning (result_correction)
+Ruwe resultaten bevatten extra informatie (zoals wind (,+/,-)).
+verwijdert alles na ,+ of ,-
+haalt alleen de cijfers waarden uit de string
+Zo wordt de data geschikt voor berekeningen.
+
+5. Conversie naar seconden (data_conversion)
+Tijdwaarden worden omgezet naar één uniforme eenheid: seconden.
+Bijvoorbeeld:
+[31, 20, 8] → 31 min, 20 sec, 0.8 sec
+Dit maakt het mogelijk om te rekenen en vergelijken.
+
+6. Missing data oplossen (zero_conversion)
+Als een waarde 0 is (ontbrekende data), wordt deze vervangen door:
+de vorige bekende waarde
+of de eerste beschikbare waarde als er nog geen vorige is
+Dit voorkomt gaten in de dataset.
+
+7. Sorteren en structureren
+De data wordt gesorteerd op jaar zodat alles chronologisch wordt weergegeven.
+Dit wordt gedaan met quicksort die we zelf hebben geschreven.
+
+8. Verschillende sporttypes
+Er zijn twee soorten data:
+
+Tijdsporten
+worden omgezet naar seconden
+geschikt voor race/tijd prestaties
+
+Afstandsporten
+blijven in originele eenheid (bijv. meters)
+worden direct gebruikt
+
+9. Dataframe (Pandas)
+De data wordt omgezet naar een tabel met kolommen:
+
+year
+gold
+silver
+bronze
+
+10. Visualisatie
+De resultaten worden geplot als een lijngrafiek:
+
+X-as: jaren
+Y-as: prestaties
+3 lijnen: goud, zilver en brons(peru)
+
+Volgorde:
+Ruwe JSON → selectie per sport → opschonen van strings → padding → conversie naar seconden → ontbrekende waarden aanvullen → splitsen per medaille(Als het een sport met meters als resultaat is) → tabel → grafiek
