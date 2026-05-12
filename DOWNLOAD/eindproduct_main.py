@@ -56,11 +56,13 @@ def user_input(data):
     for result in countries:
         for medal_index, country in enumerate(result):
             country = country[0]
+            try:
+                if country not in countries_tally[medal_index]:
+                    countries_tally[medal_index][country] = 0
 
-            if country not in countries_tally[medal_index]:
-                countries_tally[medal_index][country] = 0
-
-            countries_tally[medal_index][country] += 1
+                countries_tally[medal_index][country] += 1
+            except:
+                pass
     for n, res in enumerate(countries_tally):
         print(n+1, res) # Print 1e, 2e, 3e gevolgd met de hoeveelheid elk land gewonnen voor die medailles.
 
