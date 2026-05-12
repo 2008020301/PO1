@@ -86,4 +86,4 @@ Y-as: prestaties
 3 lijnen: goud, zilver en brons(peru)
 
 Volgorde:
-Ruwe JSON → selectie per sport → opschonen van strings → padding → conversie naar seconden → ontbrekende waarden aanvullen → splitsen per medaille(Als het een sport met meters als resultaat is) → tabel → grafiek
+Ruwe JSON → selectie per sport → opschonen van strings → padding → conversie naar seconden → ontbrekende waarden aanvullen → splitsen per medaille(Als het een sport met meters als resultaat is) → voorspelling → tabel → grafiek
