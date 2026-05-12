@@ -62,7 +62,23 @@ gold
 silver
 bronze
 
-10. Visualisatie
+10. Voorspelling van toekomstige resultaten
+Na het verwerken van de data maakt het programma ook een eenvoudige voorspelling voor de volgende Olympische Spelen.
+Hiervoor wordt gebruik gemaakt van lineaire weging op basis van jaartallen.
+Werking van de voorspelling
+Nieuwere resultaten krijgen meer invloed dan oudere resultaten.
+De oudste jaren krijgen een gewicht dicht bij 0, terwijl recente jaren een gewicht dicht bij 1 krijgen.
+Hierdoor tellen moderne prestaties zwaarder mee in de voorspelling dan oude prestaties. Dit is gedaan omdat sportprestaties sterk beïnvloed worden door technologische vooruitgang, trainingsmethodes en verbeterde technieken.
+
+Berekening
+Het programma:
+berekent het verschil tussen opeenvolgende resultaten
+geeft recentere verschillen een hoger gewicht
+berekent hiervan een gewogen gemiddelde
+telt deze verandering op bij het meest recente resultaat
+Zo ontstaat een voorspelde waarde voor de volgende Olympische Spelen.
+
+11. Visualisatie
 De resultaten worden geplot als een lijngrafiek:
 
 X-as: jaren
